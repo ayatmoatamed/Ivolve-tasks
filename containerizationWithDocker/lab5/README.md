@@ -67,3 +67,11 @@ curl http://localhost:8080
 
 ## Stop the Container
 
+docker stop app3-container
+```
+
+## Remove the Container
+
+```bash
+docker rm app3-container
+```
