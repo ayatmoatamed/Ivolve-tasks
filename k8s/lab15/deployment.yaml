@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: nodejs-app
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: nodejs
+
+  template:
+    metadata:
+      labels:
+        app: nodejs
+
+    spec:
+
+      tolerations:
+      - key: node
+        operator: Equal
+        value: worker
+        effect: NoSchedule
+
+      containers:
+      - name: nodejs-container
+        image: ayatmoatamed/nodejs-app:v1
+
+        ports:
+        - containerPort: 3000
+
+        envFrom:
+        - configMapRef:
+            name: nodejs-config
+
+        - secretRef:
+            name: nodejs-secret
+
+        volumeMounts:
+        - name: storage
+          mountPath: /app/data
+
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: nodejs-pvc
