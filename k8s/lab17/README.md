@@ -1,6 +1,5 @@
 Lab 17: Pod Resource Management with CPU and Memory Requests and Limits
-Objective
-
+Objective,,
 The objective of this lab is to configure Kubernetes resource management for an existing Node.js Deployment by adding CPU and Memory Requests and Limits.
 
 This lab covers:
