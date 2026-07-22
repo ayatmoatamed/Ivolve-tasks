@@ -24,13 +24,13 @@ cpu: "1"
 memory: "1Gi"
 Resource Limits
 
-Limits define the maximum amount of resources the container can consume.
+#Limits define the maximum amount of resources the container can consume.
 
 cpu: "2"
 memory: "2Gi"
 1. Update Deployment Configuration
 
-The resources section was added inside the Node.js container in deployment.yaml:
+#The resources section was added inside the Node.js container in deployment.yaml:
 
 containers:
   - name: nodejs-container
@@ -44,22 +44,21 @@ containers:
       limits:
         cpu: "2"
         memory: "2Gi"
-2. Apply the Updated Deployment
 
-Apply the updated Deployment:
+#2. Apply the Updated Deployment
 
 kubectl apply -f deployment.yaml -n ivolve
 
 Check the Deployment status:
 
 kubectl get deployment nodejs-app -n ivolve
-3. Verify Pod Resources
+#3. Verify Pod Resources
 
-To verify that CPU and Memory requests and limits were applied:
+#To verify that CPU and Memory requests and limits were applied:
 
 kubectl describe pod <pod-name> -n ivolve
 
-Expected output:
+#Expected output:
 
 Limits:
   cpu:     2
@@ -68,7 +67,7 @@ Limits:
 Requests:
   cpu:     1
   memory:  1Gi
-4. Kubernetes QoS Class
+#4. Kubernetes QoS Class
 
 Kubernetes assigns a Quality of Service (QoS) class to Pods depending on resource configuration.
 
@@ -88,7 +87,7 @@ QoS Class: Burstable
 
 because requests and limits were configured.
 
-Example:
+#Example:
 
 requests:
   cpu: "1"
@@ -97,22 +96,22 @@ requests:
 limits:
   cpu: "2"
   memory: "2Gi"
-5. Enable Metrics Server
+#5. Enable Metrics Server
 
-The kubectl top command requires Metrics Server because it collects CPU and Memory usage metrics from Kubernetes nodes and Pods.
+##The kubectl top command requires Metrics Server because it collects CPU and Memory usage metrics from Kubernetes nodes and Pods.
 
 Enable Metrics Server in Minikube:
 
 minikube addons enable metrics-server
 
-Verify that Metrics Server is running:
+#Verify that Metrics Server is running:
 
 kubectl get pods -n kube-system | grep metrics
 
-Expected output:
+#Expected output:
 
 metrics-server-xxxxx   1/1   Running
-6. Monitor Real-Time Resource Usage
+#6. Monitor Real-Time Resource Usage
 
 After Metrics Server is running, resource usage can be monitored using:
 
@@ -121,29 +120,17 @@ kubectl top nodes
 Check Pod Resources
 kubectl top pod -n ivolve
 
-Example output:
+#Example output:
 
 NAME                          CPU(cores)   MEMORY(bytes)
 
 nodejs-app-xxxxx              1m           20Mi
 nodejs-app-yyyyy              1m           20Mi
 
-This shows the current CPU and Memory consumption of running Pods.
+#This shows the current CPU and Memory consumption of running Pods.
 
-Useful Kubernetes Commands
-Get Pods
-kubectl get pods -n ivolve
-Describe Pod
-kubectl describe pod <pod-name> -n ivolve
-Check Deployment
-kubectl get deployment nodejs-app -n ivolve
-Check ReplicaSets
-kubectl get rs -n ivolve
-Check Rollout Status
-kubectl rollout status deployment nodejs-app -n ivolve
-Monitor Resource Usage
-kubectl top pod -n ivolve
-Important Concepts Learned
+
+#Important Concepts Learned
 CPU and Memory Requests
 Requests are the minimum resources guaranteed for the container.
 Kubernetes Scheduler uses requests when deciding where to place Pods.
